@@ -3,29 +3,28 @@
         <div>
             <div>
                 <el-row :gutter="20">
-                    <el-col :span="8">
-                        <div class="grid-content bg-purple">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
 
-                            <el-input v-model="bbs_name" placeholder="请输入文章标题"></el-input>
+                    <el-input v-model="bbs_name" placeholder="请输入文章标题"></el-input>
 
-                        </div>
-                    </el-col>
-                    <el-col :span="16">
-                        <div class="grid-content bg-purple">
+                    </div>
+                </el-col>
+                <el-col :span="16">
+                    <div class="grid-content bg-purple">
 
-                            <el-input v-model="bbs_description" placeholder="请输入文章描述"></el-input>
+                                <el-input v-model="bbs_description" placeholder="请输入文章描述"></el-input>
 
-                        </div>
-                    </el-col>
-                </el-row>
+                    </div>
+                </el-col>
+            </el-row>
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <div class="grid-content bg-purple">
-
-                            <el-select v-model="optionValue"  placeholder="请选择" >
+                            <el-select v-model="value" clearable placeholder="请选择">
                                 <el-option
                                         v-for="item in allType"
-                                        :key="item.id"
+                                        :key="item.value"
                                         :label="item.name"
                                         :value="item.id">
                                 </el-option>
@@ -37,15 +36,15 @@
                     </el-col>
                     <el-col :span="3">
                         <div class="grid-content bg-purple">
-                            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                            <el-button>取消</el-button>
+                             <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                             <el-button>取消</el-button>
                         </div>
                     </el-col>
                 </el-row>
             </div>
-            <div >
-                <mavon-editor style="height: 100vh;" ref="md" class="md" v-model="sqlData.markdown" @imgAdd="imgAdd" @imgDel="imgDel" @save="saveArticle"/>
-            </div>
+                <div >
+                    <mavon-editor style="height: 100vh;" ref="md" class="md" v-model="sqlData.markdown" @imgAdd="imgAdd" @imgDel="imgDel" @save="saveArticle"/>
+                </div>
         </div>
     </div>
 </template>
@@ -58,28 +57,28 @@
     })
     const file_axios = axios.create({
         headers: {'Content-Type': 'multipart/form-data'},
+        headers: {'token': localStorage.getItem('token')},
     })
     const area_form_axios = axios.create({
         headers: {'Content-Type': 'application/x-www-form-urlencoded',},
+        headers: {'token': localStorage.getItem('token')},
     })
     export default {
         created(){
             this.getAllTag()
-            this.getSingTop(this.$route.params.id);
-
         },
         name: "Markdown",
         data() {
             return {
-                oldId:"",
                 allType: [],
-                optionValue: "",
+                value: '',
                 sqlData:{
                     markdown:'',
                     html:'',
                 },
                 bbs_description:'',
                 bbs_name:'',
+                // bbs_name:'文章名称',
                 img_file: {},// 一次上次多张图片时使用
                 form: {
                     name: '',
@@ -132,13 +131,11 @@
                     var url = response.data;
                     //通过引入对象获取: import {mavonEditor} from ... 等方式引入后，此时$vm即为mavonEditor
                     //通过$refs获取: html声明ref : <mavon-editor ref=md ></mavon-editor>， 此时$vm为 this.$refs.md`
+                    alert(url)
                     this.$refs.md.$img2Url(pos, url);
                 })
             },
             onSubmit() {
-
-                this;
-                this.oldId = this.$route.params.id;
                 if(this.bbs_name.length > 0 && this.bbs_name.trim().length != 0   ){
                     alert(this.bbs_name+this.bbs_description+this.value)
                     var htmlCode = this.$refs.md.d_render;
@@ -148,11 +145,10 @@
                         return;
                     }
                     var params ={   "markCode":markdownCode,
-                        "markHtml":htmlCode,
-                        "name":this.bbs_name,
-                        "content":this.bbs_description,
-                        "type":this.optionValue,
-                        "id": parseInt(this.oldId),
+                                    "markHtml":htmlCode,
+                                    "name":this.bbs_name,
+                                    "content":this.bbs_description,
+                                    "type":this.value,
                     };
                     area_axios({
                         url: 'http://localhost:8080/api/add',
@@ -182,20 +178,7 @@
                     .catch(function (error) {
                         console.log(error);
                     });
-            },
-            getSingTop(id) {
-                var that = this
-                area_axios.get('http://localhost:8080/markdown/selBlogById?id='+id)
-                    .then(function (response) {
-                        that.optionValue=parseInt(response.data.type)
-                        that.bbs_description=response.data.content
-                        that.oldId=parseInt(response.data.type)
-                        that.bbs_name=response.data.name
-                        that.sqlData.markdown=response.data.markCode
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+
             }
         },
 

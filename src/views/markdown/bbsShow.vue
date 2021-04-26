@@ -107,10 +107,11 @@
 </template>
 <script>
     import axios from 'axios'
-
     const area_axios = axios.create({
         headers: {'Content-Type': 'application/json;charset=utf-8'},
+        headers: {'token': localStorage.getItem('token')},
     })
+
     export default {
         beforeCreate() {
             document.querySelector('body').setAttribute('style', 'background-color:#f8f8f8')
@@ -124,13 +125,13 @@
                 allBlog: [],
                 allType:[],
                 activeName: 'index',
-
             };
         },
         methods: {
             getBlog() {
+                console.log(window.localStorage.getItem('token'))
                 var that = this
-                area_axios.get('http://localhost:8080/markdown/selBlogByPage?PageNum=0')
+                area_axios.get('http://localhost:8080/markdown/selBlogByPage?PageNum=0 ')
                     .then(function (response) {
                         that.allBlog = response.data
                     })
@@ -142,19 +143,16 @@
                 var that = this
                 area_axios.get('http://localhost:8080/markdown/selBlogType')
                     .then(function (response) {
-
                         that.allType = response.data
                     })
                     .catch(function (error) {
                         console.log(error);
-        });
+                    });
             },
             click_title(id) {
                 // this.$router.push({
                 //     path: `/info/` + id,
                 // })
-
-
             },
             click_tag(id){
                 alert(id)
@@ -162,11 +160,9 @@
             click_content(tid){
                 let routeUrl = this.$router.resolve({
                     path: "/singshow/"+tid,
-
                 });
                 window.open(routeUrl.href, '_blank');
             }
-
         }
     };
 </script>
@@ -181,9 +177,7 @@
     }
 
     .bg-purple {
-
     }
-
     .grid-content {
         border-radius: 4px;
         min-height: 36px;
