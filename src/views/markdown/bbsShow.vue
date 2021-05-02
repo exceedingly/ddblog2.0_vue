@@ -15,14 +15,14 @@
                     <!--第一行中间左边开始-->
                     <el-col :span="18" style="background-color: #f8f8f8;margin-bottom: 10px">
                         <el-card shadow="hover" style="height: 40px;margin: 10px;width: 573px;margin-left: -10px">
-                           123
+                            123
                         </el-card>
                     </el-col>
                     <!--第一行中间左边结束-->
                     <!--第一行中间右边开始-->
                     <el-col :span="6" style="background-color: #f8f8f8">
-                        <div style="background-color: #f8f8f8;margin: 10px;" >
-                            <el-button type="primary" style="width: 100%">发布文章</el-button>
+                        <div style="background-color: #f8f8f8;margin: 10px;">
+                            <el-button type="primary" style="width: 100%" @click="addbbs"> 发布文章</el-button>
                         </div>
                     </el-col>
                     <!--第一行中间右边结束-->
@@ -39,74 +39,109 @@
         </el-row>
         <!--第一行结束-->
         <el-row :gutter="20" class="nav_backgroup">
-                <!--左边开始-->
-                <el-col :span="5" style="height: 1630px;background-color: #f8f8f8">
-                    <div></div>
-                </el-col>
-                <!--左边结束-->
-                <!--中间开始-->
-                <el-col :span="14">
+            <!--左边开始-->
+            <el-col :span="5" style="height: 1630px;background-color: #f8f8f8">
+                <div></div>
+            </el-col>
+            <!--左边结束-->
+            <!--中间开始-->
+            <el-col :span="14">
 
-                    <el-row :gutter="20" >
-                        <!--中间左边开始-->
-                        <el-col :span="18" v-for="blog in allBlog" style="background-color: #f8f8f8">
-                            <el-row  type="flex">
-                                <el-col>
+                <el-row :gutter="20">
+                    <!--中间左边开始-->
+                    <el-col :span="18">
+
+                        <el-row type="flex">
+                            <el-col>
+                                <div v-for="blog in allBlog" style="background-color: #f8f8f8">
                                     <el-card shadow="hover" class="content">
-                                        <div style="height:100px"    v-on:click="click_content(blog.id)" >
-                                            <span><a style="text-decoration:none;" >{{blog.name}}</a></span><br/><br/>
+
+                                        <div style="height:100px" v-on:click="click_content(blog.id)">
+                                            <span><a style="text-decoration:none;">{{blog.name}}</a></span><br/><br/>
                                             <span>{{blog.content}}</span><br/><br/>
                                             <span style="font-size: 15px">{{blog.gmt_create }}</span>
-
                                         </div>
+
                                     </el-card>
-                                </el-col>
-                            </el-row>
-                            <br/>
-                        </el-col>
+                                    <br/>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <div >
 
-                        <!--中间左边结束-->
-                        <!--中间右边开始-->
+                            <el-pagination
+                                    @size-change='handleSizeChange'
+                                    background
+                                    @current-change='handleCurrentChange'
+                                    :current-page ='queryInfo.pagenum'
 
-                            <div style="background-color: #f8f8f8;height: 1630px">
+                                    :page-size='queryInfo.pagesize'
+                                    layout='prev,pager,next'
+                                    :total='total'>
+                            </el-pagination>
 
-                                <el-card class="box-card">
-                                    <div slot="header" class="clearfix">
-                                        <span>全部标签</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-arrow-right"> </el-button>
-                                    </div>
-                                    <div  >
-                                        <ul  >
-                                            <div   v-for="o in allType" style="font-size: 15px;margin: 10px;padding: 15px;margin-left:-30px;" class="hover">
-                                                <li  style=" list-style: none; padding: -15px;margin: -10px ;margin-left:10px;width: 100%" v-on:click="click_tag(o.id)"  >{{ o.name }}<i style="float: right;" class="el-icon-arrow-right"></i></li>
-                                            </div>
-                                        </ul>
-
-                                    </div>
-                                </el-card>
+                        </div>
 
 
-                            </div>
-
-                        <!--中间右边结束-->
-                    </el-row>
 
 
-                </el-col>
-                <!--中间结束-->
-                <!--右边开始-->
-                <el-col :span="5" style="height: 1630px;background-color: #f8f8f8">
-                    <div></div>
-                </el-col>
-                <!--右边结束-->
+                    <!--中间左边结束-->
+
+
+                    <!--中间右边开始-->
+
+
+
+                    <!--中间右边结束-->.
+                    </el-col>
+                    <el-col :span="6">
+                        <div style="background-color: #f8f8f8;height: 1630px">
+
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>全部标签</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text"
+                                               icon="el-icon-arrow-right"></el-button>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <div v-for="o in allType"
+                                             style="font-size: 15px;margin: 10px;padding: 15px;margin-left:-30px;"
+                                             class="hover">
+                                            <li style=" list-style: none; padding: -15px;margin: -10px ;margin-left:10px;width: 100%"
+                                                v-on:click="click_tag(o.id)">{{ o.name }}<i style="float: right;"
+                                                                                            class="el-icon-arrow-right"></i>
+                                            </li>
+                                        </div>
+                                    </ul>
+
+                                </div>
+                            </el-card>
+
+
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-col>
+            <!--中间结束-->
+            <!--右边开始-->
+            <el-col :span="5" style="height: 1630px;background-color: #f8f8f8">
+                <div></div>
+            </el-col>
+            <!--右边结束-->
 
         </el-row>
+
+        <div style="width: 100%;align-content: center;margin:0 auto;border:1px solid #000;width:300px;height:100px">页脚
+        </div>
     </div>
 
 
 </template>
 <script>
     import axios from 'axios'
+
     const area_axios = axios.create({
         headers: {'Content-Type': 'application/json;charset=utf-8'},
         headers: {'token': localStorage.getItem('token')},
@@ -122,18 +157,24 @@
         },
         data() {
             return {
+                queryInfo:{
+                    pagenum:1,//当前页数
+                    pagesize: 10     //每页条数
+                },
+                total:null,//总条目数
                 allBlog: [],
-                allType:[],
+                allType: [],
                 activeName: 'index',
             };
         },
         methods: {
             getBlog() {
-                console.log(window.localStorage.getItem('token'))
                 var that = this
-                area_axios.get('http://localhost:8080/markdown/selBlogByPage?PageNum=0 ')
+                area_axios.get('http://localhost:8080/markdown/selBlogByPage?PageNum= '+this.queryInfo.pagenum)
                     .then(function (response) {
-                        that.allBlog = response.data
+                        that.allBlog = response.data.markDowns
+                        that.total = response.data.total
+                        window.scrollTo(0,0);
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -149,35 +190,45 @@
                         console.log(error);
                     });
             },
-            click_title(id) {
-                // this.$router.push({
-                //     path: `/info/` + id,
-                // })
+            addbbs() {
+                this.$router.push({
+                    path: `/info/add`,
+                })
             },
-            click_tag(id){
+            click_tag(id) {
                 alert(id)
             },
-            click_content(tid){
+            click_content(tid) {
                 let routeUrl = this.$router.resolve({
-                    path: "/singshow/"+tid,
+                    path: "/singshow/" + tid,
                 });
                 window.open(routeUrl.href, '_blank');
-            }
+            },
+            handleSizeChange(val){
+                this.queryInfo.pagenum = val;
+                this.getBlog()
+            },
+            handleCurrentChange(val){
+                this.queryInfo.pagenum = val;
+                this.getBlog()
+            },
         }
     };
 </script>
 <style>
-    .hover:hover{
+    .hover:hover {
         background-color: rgb(233, 236, 239);
-        cursor:pointer;
+        cursor: pointer;
     }
-    .content:hover{
 
-        cursor:pointer;
+    .content:hover {
+
+        cursor: pointer;
     }
 
     .bg-purple {
     }
+
     .grid-content {
         border-radius: 4px;
         min-height: 36px;

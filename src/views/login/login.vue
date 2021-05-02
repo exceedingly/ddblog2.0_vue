@@ -30,7 +30,7 @@
             return {
                 form: {
                     id:'1'
-,                    username: '',
+,                   username: '',
                     password:'',
                 }
             }
@@ -47,13 +47,13 @@
                     data:{"username":this.form.username,"password":this.form.password},
                 }).then((response) => {
                     localStorage.setItem('token', response.data.token);
-                    Utils.$emit('demo',response.data.name);
+                    utils.$emit('demo',response.data.name);
 
                 })
             },
             aaa(){
                 console.log("62")
-                    Utils.$emit('login',"asd");
+                utils.$emit('login',"asd");
             }
         }
     }

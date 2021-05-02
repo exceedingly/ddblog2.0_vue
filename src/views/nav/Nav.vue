@@ -1,11 +1,9 @@
 <template>
     <div >
-        <indexImportOrder style="display: none" v-on:selectnav="selectLogin"/>
         <el-row :gutter="20" class="nav_backgroup">
             <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
             <el-col :span="16">
                 <div class="grid-content bg-purple">
-
                     <el-tabs v-model="activeName" @tab-click="handleClick">
                         <el-tab-pane
                                 v-for="(item,index) in list"
@@ -13,57 +11,62 @@
                                 :label="item.label"
                                 :name="item.name"
                         ></el-tab-pane>
-                        <el-tab-pane
-                                :key="index"
-                                :label="登录"
-                                :name="bbs_login"
-                        ></el-tab-pane>
+                        <!--<el-tab-pane label="登录" name="bbs_login'"> </el-tab-pane>-->
                     </el-tabs>
                 </div>
             </el-col>
             <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         </el-row>
+
+        <el-dialog
+                title="登陆界面"
+                :visible.sync="centerDialogVisible"
+                width="30%"
+                center>
+            <span><el-input v-model="login.username"></el-input></span>
+            <span><el-input v-model="login.password"></el-input></span>
+            <span slot="footer" class="dialog-footer"><button type="primary" @click="navlogin">确 定</button></span>
+        </el-dialog>
     </div>
 </template>
 <script>
     import indexImportOrder from '../login/login'
+    import utils from '../nav/temp.js';
     export default {
         data() {
             return {
-                loginstatus:'登录',
+                centerDialogVisible: false,
                 activeName: 'index',
                 list: [
                     {
                         label: '首页',
-                      //  number: 10,
                         name: 'index'
                     },
                     {
                         label: '博客',
-                      //  number: 3,
                         name: 'bbs_show'
                     },
-                    // {
-                    //     label: '教程',
-                    //     //number: 12,
-                    //     name: 'bbs_add'
-                    // },
-                    // {
-                    //     label: '展示',
-                    //    // number: 2,
-                    //     name: 'bbs_edit'
-                    // },
                     {
                         label: '登录',
-                       // number: 1,
                         name: 'bbs_login'
                     }
                 ],
+                login:{
+                    username:'',
+                    password:''
+                }
 
             };
         },
         components:{
             indexImportOrder,
+            utils,
+        },
+        mounted() {
+            utils.$on('demo', (val) => {
+                var that = this
+                that.list[2].label = val
+            });
         },
         methods: {
             handleClick(tab, event) {
@@ -88,21 +91,29 @@
                         path: `/bbs_show`,
                     })
                 }else if(tab.name=="bbs_login") {
-                    this.$router.push({
-                        path: `/info/login`,
-                    })
+                    // this.$router.push({
+                    //     path: `/info/login`,
+                    // })
+
+                    this.centerDialogVisible = true
                 }
             },
             functionB(){
                 var that = this
-                that.list[4].label = msg
-
+                that.list[2].label = msg
             },
             selectLogin(name){
-
-
                 this.activeName=name
             },
+            demo(a){
+                alert("aaa")
+            },
+            navlogin(){
+                centerDialogVisible = false;
+                console.log(login.username)
+                console.log(login.password)
+            }
+
         }
     };
 </script>
