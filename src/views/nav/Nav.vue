@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div style="width: 100vw" ref="navfixedBar" :class="navsearchBarFixed == true ? 'navisFixed':'navtab'" >
         <el-row :gutter="20" class="nav_backgroup">
             <el-col :span="5"><div class="grid-content bg-purple"></div></el-col>
 
@@ -25,7 +25,7 @@
             </el-col>
 
             <el-col :span="2">
-                <el-button type="primary" class="el-icon-user-solid"  style="float: right;margin-right: 22px" @click="loginbtn" >&nbsp;&nbsp;登录</el-button>
+                <el-button type="primary"   style="float: right;margin-right: 22px" @click="loginbtn" >&nbsp;&nbsp;登录</el-button>
             </el-col>
 
             <el-col :span="5"><div class="grid-content bg-purple"></div></el-col>
@@ -54,6 +54,8 @@
     export default {
         data() {
             return {
+                navsearchBarFixed:false,
+                navoffsetTop:null,
                 centerDialogVisible: false,
                 activeName: 'index',
                 list: [
@@ -89,8 +91,18 @@
             utils.$on('navlogin', (val) => {
                 this.centerDialogVisible = true;
             });
+            window.addEventListener("scroll",this.navhandleScroll)
+            this.navoffsetTop = this.$refs.navfixedBar.offsetTop
+        },
+        destroyed() {
+            window.removeEventListener("scroll",this.navhandleScroll)
         },
         methods: {
+            navhandleScroll(){
+                const navscrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                navscrollTop > this.navoffsetTop ? this.navsearchBarFixed = true:this.navsearchBarFixed = false;
+
+            },
             handleClick(tab, event) {
                 if(tab.name=="bbs_sing_show"){
                     this.$router.push({
@@ -173,6 +185,14 @@
     }
     .el-dialog  {
         border-radius: 15px;
+    }
+    .navtop{
+        width: 100%;
+    }
+    .navisFixed{
+        position: fixed;
+        z-index: 999;
+        width: 100%;
     }
 
     body{margin-top: 0px}

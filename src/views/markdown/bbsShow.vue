@@ -1,42 +1,43 @@
 <template>
-    <!--第一行 开始-->
-    <div class="bg-purple-dark" style="height: 100%">
-        <el-row  class="nav_backgroup" type="flex">
-            <!--第一行左边-->
-            <el-col :span="5" style="background-color: #f8f8f8">
-                <div class="grid-content bg-purple"></div>
-            </el-col>
-            <!--第一行左边结束-->
-            <!--第一行中间开始-->
-            <el-col :span="14" style="background-color: #f8f8f8">
-                <div :gutter="20" class="">
-                    <!--第一行中间左边开始-->
-                    <el-col :span="18" style="background-color: #f8f8f8;margin-bottom: 10px;    ">
-                        <el-card shadow="hover" style="height: 40px;margin: 10px;width: 100%;margin-left: -10px">
-                            <el-breadcrumb separator="/" style="padding-bottom: 10px">
-                                <el-breadcrumb-item :to="{ path: '/' }">全部</el-breadcrumb-item>
-                                <el-breadcrumb-item><a href="/">{{ this.navtag }}</a></el-breadcrumb-item>
-                            </el-breadcrumb>
-                        </el-card>
 
-                    </el-col>
-                    <!--第一行中间左边结束-->
-                    <!--第一行中间右边开始-->
-                    <el-col :span="6" style="background-color: #f8f8f8">
-                        <div style="background-color: #f8f8f8;margin: 10px;">
-                            <el-button type="primary" style="width: 100%" @click="addbbs"> 发布文章</el-button>
-                        </div>
-                    </el-col>
-                    <!--第一行中间右边结束-->
-                </div>
-            </el-col>
-            <!--第一行中间结束-->
-            <!--第一行右边开始-->
-            <el-col :span="5" style="background-color: #f8f8f8">
-                <div class="grid-content bg-purple"></div>
-            </el-col>
-            <!--第一行右边结束-->
-        </el-row>
+    <div class="bg-purple-dark" style="height: 100%">
+        <!--第一行 开始-->
+        <!--        <el-row  class="nav_backgroup" type="flex">-->
+        <!--            &lt;!&ndash;第一行左边&ndash;&gt;-->
+        <!--            <el-col :span="5" style="background-color: #f8f8f8">-->
+        <!--                <div class="grid-content bg-purple"></div>-->
+        <!--            </el-col>-->
+        <!--            &lt;!&ndash;第一行左边结束&ndash;&gt;-->
+        <!--            &lt;!&ndash;第一行中间开始&ndash;&gt;-->
+        <!--            <el-col :span="14" style="background-color: #f8f8f8">-->
+        <!--                <div :gutter="20" class="">-->
+        <!--                    &lt;!&ndash;第一行中间左边开始&ndash;&gt;-->
+        <!--                    <el-col :span="18" style="background-color: #f8f8f8;margin-bottom: 10px;    ">-->
+        <!--                        <el-card shadow="hover" style="height: 40px;margin: 10px;width: 100%;margin-left: -10px">-->
+        <!--                            <el-breadcrumb separator="/" style="padding-bottom: 10px">-->
+        <!--                                <el-breadcrumb-item :to="{ path: '/' }">全部</el-breadcrumb-item>-->
+        <!--                                <el-breadcrumb-item><a href="/">{{ this.navtag }}</a></el-breadcrumb-item>-->
+        <!--                            </el-breadcrumb>-->
+        <!--                        </el-card>-->
+
+        <!--                    </el-col>-->
+        <!--                    &lt;!&ndash;第一行中间左边结束&ndash;&gt;-->
+        <!--                    &lt;!&ndash;第一行中间右边开始&ndash;&gt;-->
+        <!--                    <el-col :span="6" style="background-color: #f8f8f8">-->
+        <!--&lt;!&ndash;                        <div style="background-color: #f8f8f8;margin: 10px;">&ndash;&gt;-->
+        <!--&lt;!&ndash;                            <el-button type="primary" style="width: 100%" @click="addbbs"> 发布文章</el-button>&ndash;&gt;-->
+        <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+        <!--                    </el-col>-->
+        <!--                </div>-->
+        <!--              &lt;!&ndash;第一行中间右边结束&ndash;&gt;-->
+        <!--            </el-col>-->
+        <!--            &lt;!&ndash;第一行中间结束&ndash;&gt;-->
+        <!--            &lt;!&ndash;第一行右边开始&ndash;&gt;-->
+        <!--            <el-col :span="5" style="background-color: #f8f8f8">-->
+        <!--                <div class="grid-content bg-purple"></div>-->
+        <!--            </el-col>-->
+        <!--            &lt;!&ndash;第一行右边结束&ndash;&gt;-->
+        <!--        </el-row>-->
         <!--第一行结束-->
 
 
@@ -100,9 +101,12 @@
                         <!--中间右边结束-->
                     </el-col>
                     <el-col :span="6">
-                        <div style="background-color: #f8f8f8;height: 1630px">
-
+                        <div ref="fixedBar" :class="searchBarFixed == true ? 'isFixed':'tab'" style="background-color: #f8f8f8;height: 1630px">
+                            <div style="background-color: #f8f8f8;margin: 10px;">
+                                <el-button type="primary" style="width: 100%" @click="addbbs"> 发布文章</el-button>
+                            </div>
                             <el-card class="bbsshowtypeall">
+
                                 <div slot="header" class="clearfix">
                                     <span>全部标签</span>
                                     <!--箭头 和 全部标签-->
@@ -137,8 +141,7 @@
 
         </el-row>
 
-        <div style="width: 100%;align-content: center;margin:0 auto;border:1px solid #000;width:300px;height:100px">页脚
-        </div>
+
     </div>
 
 
@@ -162,6 +165,8 @@
         },
         data() {
             return {
+                searchBarFixed:false,
+                offsetTop:null,
                 navtag:'sad',
                 queryInfo:{
                     pagenum:1,//当前页数
@@ -187,7 +192,19 @@
             utils,
 
         },
+        mounted() {
+            window.addEventListener("scroll",this.handleScroll)
+            this.offsetTop = this.$refs.fixedBar.offsetTop
+        },
+        destroyed() {
+            window.removeEventListener("scroll",this.handleScroll)
+        },
         methods: {
+            handleScroll(){
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                scrollTop > this.offsetTop ? this.searchBarFixed = true:this.searchBarFixed = false;
+
+            },
             getBlog() {
                 var that = this
                 area_axios.get('http://localhost:8080/markdown/selBlogByPage?PageNum= '+this.queryInfo.pagenum)
@@ -274,6 +291,14 @@
     }
     .bbsshowtypeall{
 
+    }
+    .top{
+
+    }
+    .isFixed{
+        margin-top: 50px;
+        position:fixed;
+        z-index: 999;
     }
 
 </style>
