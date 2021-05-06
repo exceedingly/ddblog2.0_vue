@@ -1,52 +1,7 @@
 <template>
 
     <div class="bg-purple-dark" style="height: 100%">
-        <!--第一行 开始-->
-        <!--        <el-row  class="nav_backgroup" type="flex">-->
-        <!--            &lt;!&ndash;第一行左边&ndash;&gt;-->
-        <!--            <el-col :span="5" style="background-color: #f8f8f8">-->
-        <!--                <div class="grid-content bg-purple"></div>-->
-        <!--            </el-col>-->
-        <!--            &lt;!&ndash;第一行左边结束&ndash;&gt;-->
-        <!--            &lt;!&ndash;第一行中间开始&ndash;&gt;-->
-        <!--            <el-col :span="14" style="background-color: #f8f8f8">-->
-        <!--                <div :gutter="20" class="">-->
-        <!--                    &lt;!&ndash;第一行中间左边开始&ndash;&gt;-->
-        <!--                    <el-col :span="18" style="background-color: #f8f8f8;margin-bottom: 10px;    ">-->
-        <!--                        <el-card shadow="hover" style="height: 40px;margin: 10px;width: 100%;margin-left: -10px">-->
-        <!--                            <el-breadcrumb separator="/" style="padding-bottom: 10px">-->
-        <!--                                <el-breadcrumb-item :to="{ path: '/' }">全部</el-breadcrumb-item>-->
-        <!--                                <el-breadcrumb-item><a href="/">{{ this.navtag }}</a></el-breadcrumb-item>-->
-        <!--                            </el-breadcrumb>-->
-        <!--                        </el-card>-->
-
-        <!--                    </el-col>-->
-        <!--                    &lt;!&ndash;第一行中间左边结束&ndash;&gt;-->
-        <!--                    &lt;!&ndash;第一行中间右边开始&ndash;&gt;-->
-        <!--                    <el-col :span="6" style="background-color: #f8f8f8">-->
-        <!--&lt;!&ndash;                        <div style="background-color: #f8f8f8;margin: 10px;">&ndash;&gt;-->
-        <!--&lt;!&ndash;                            <el-button type="primary" style="width: 100%" @click="addbbs"> 发布文章</el-button>&ndash;&gt;-->
-        <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-        <!--                    </el-col>-->
-        <!--                </div>-->
-        <!--              &lt;!&ndash;第一行中间右边结束&ndash;&gt;-->
-        <!--            </el-col>-->
-        <!--            &lt;!&ndash;第一行中间结束&ndash;&gt;-->
-        <!--            &lt;!&ndash;第一行右边开始&ndash;&gt;-->
-        <!--            <el-col :span="5" style="background-color: #f8f8f8">-->
-        <!--                <div class="grid-content bg-purple"></div>-->
-        <!--            </el-col>-->
-        <!--            &lt;!&ndash;第一行右边结束&ndash;&gt;-->
-        <!--        </el-row>-->
-        <!--第一行结束-->
-
-
-
-
-
-
-
-        <el-row :gutter="20" class="nav_backgroup">
+        <el-row class="nav_backgroup">
             <!--左边开始-->
             <el-col :span="5" style="height: 1630px;background-color: #f8f8f8">
                 <div></div>
@@ -61,12 +16,22 @@
 
                         <el-row type="flex">
                             <el-col>
+
+                                <el-card class="box-card" style="width: 100%">
+                                    <div>
+                                        <el-breadcrumb separator="/">
+                                            <el-breadcrumb-item :to="{ path: '/' }">全部</el-breadcrumb-item>
+                                            <el-breadcrumb-item><a href="/">{{ this.navtag }}</a></el-breadcrumb-item>
+                                        </el-breadcrumb>
+                                    </div>
+                                </el-card>
+
                                 <div v-for="blog in allBlog" style="background-color: #f8f8f8">
                                     <el-card shadow="hover" class="content">
                                         <div style="height:100px" v-on:click="click_content(blog.id)">
-                                            <span><a style="text-decoration:none;">{{blog.name}}</a></span><br/><br/>
-                                            <span>{{blog.content}}</span><br/><br/>
-                                            <span style="font-size: 15px">{{blog.gmt_create }}</span>
+                                            <span><a style="text-decoration:none;">{{ blog.name }}</a></span><br/><br/>
+                                            <span>{{ blog.content }}</span><br/><br/>
+                                            <span style="font-size: 15px">{{ blog.gmt_create }}</span>
                                         </div>
 
                                     </el-card>
@@ -80,28 +45,18 @@
                                     @size-change='handleSizeChange'
                                     background
                                     @current-change='handleCurrentChange'
-                                    :current-page ='queryInfo.pagenum'
+                                    :current-page='queryInfo.pagenum'
                                     :page-size='queryInfo.pagesize'
                                     layout='prev,pager,next'
                                     :total='total'>
                             </el-pagination>
-
                         </div>
-
-
-
-
                         <!--中间左边结束-->
 
-
-                        <!--中间右边开始-->
-
-
-
-                        <!--中间右边结束-->
                     </el-col>
                     <el-col :span="6">
-                        <div ref="fixedBar" :class="searchBarFixed == true ? 'isFixed':'tab'" style="background-color: #f8f8f8;height: 1630px">
+                        <div ref="fixedBar" :class="searchBarFixed == true ? 'isFixed':'tab'"
+                             style="background-color: #f8f8f8;height: 1630px">
                             <div style="background-color: #f8f8f8;margin: 10px;">
                                 <el-button type="primary" style="width: 100%" @click="addbbs"> 发布文章</el-button>
                             </div>
@@ -110,7 +65,7 @@
                                 <div slot="header" class="clearfix">
                                     <span>全部标签</span>
                                     <!--箭头 和 全部标签-->
-                                    <el-button style="float: right; padding: 3px 0" type="text"  icon="el-icon-arrow-right"></el-button>
+                                    <el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-arrow-right"></el-button>
                                 </div>
                                 <!--                                标签集合-->
                                 <div>
@@ -118,8 +73,9 @@
                                         <div v-for="o in allType"
                                              style="font-size: 15px;"
                                         >
-                                            <li  class="hover" style=" list-style: none;  width: 200px;margin-left: -50px ;padding: 10px"
-                                                 v-on:click="click_tag(o.id,o.name)">{{ o.name }}<span ><i style="float: right"  class="el-icon-arrow-right"></i></span>
+                                            <li class="hover" style=" list-style: none;  width: 200px;margin-left: -50px ;padding: 10px"
+                                                v-on:click="click_tag(o.id,o.name)">{{ o.name }}<span><i style="float: right"
+                                                                                                         class="el-icon-arrow-right"></i></span>
                                             </li>
                                         </div>
                                     </ul>
@@ -141,8 +97,8 @@
 
         </el-row>
 
-
     </div>
+
 
 
 </template>
@@ -165,53 +121,53 @@
         },
         data() {
             return {
-                searchBarFixed:false,
-                offsetTop:null,
-                navtag:'sad',
-                queryInfo:{
-                    pagenum:1,//当前页数
+                searchBarFixed: false,
+                offsetTop: null,
+                navtag: 'sad',
+                queryInfo: {
+                    pagenum: 1,//当前页数
                     pagesize: 10     //每页条数
                 },
-                total:100,//总条目数
+                total: 100,//总条目数
                 allBlog: [],
                 allType: [
-                    {id:1,name:"数据库"},
-                    {id:2,name:"面试"},
-                    {id:3,name:"linux"},
-                    {id:4,name:"算法"},
-                    {id:1,name:"数据库"},
-                    {id:2,name:"面试"},
-                    {id:3,name:"linux"},
-                    {id:4,name:"算法"},
+                    {id: 1, name: "数据库"},
+                    {id: 2, name: "面试"},
+                    {id: 3, name: "linux"},
+                    {id: 4, name: "算法"},
+                    {id: 1, name: "数据库"},
+                    {id: 2, name: "面试"},
+                    {id: 3, name: "linux"},
+                    {id: 4, name: "算法"},
 
                 ],
                 activeName: 'index',
             };
         },
-        components:{
+        components: {
             utils,
 
         },
         mounted() {
-            window.addEventListener("scroll",this.handleScroll)
+            window.addEventListener("scroll", this.handleScroll)
             this.offsetTop = this.$refs.fixedBar.offsetTop
         },
         destroyed() {
-            window.removeEventListener("scroll",this.handleScroll)
+            window.removeEventListener("scroll", this.handleScroll)
         },
         methods: {
-            handleScroll(){
+            handleScroll() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-                scrollTop > this.offsetTop ? this.searchBarFixed = true:this.searchBarFixed = false;
+                scrollTop > this.offsetTop ? this.searchBarFixed = true : this.searchBarFixed = false;
 
             },
             getBlog() {
                 var that = this
-                area_axios.get('http://localhost:8080/markdown/selBlogByPage?PageNum= '+this.queryInfo.pagenum)
+                area_axios.get('http://localhost:8080/markdown/selBlogByPage?PageNum= ' + this.queryInfo.pagenum)
                     .then(function (response) {
                         that.allBlog = response.data.markDowns
                         that.total = response.data.total
-                        window.scrollTo(0,0);
+                        window.scrollTo(0, 0);
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -228,9 +184,9 @@
                     });
             },
             addbbs() {
-                if(localStorage.getItem("token")==null){
-                    utils.$emit('navlogin','bbs_login');
-                }else{
+                if (localStorage.getItem("token") == null) {
+                    utils.$emit('navlogin', 'bbs_login');
+                } else {
                     //去查询开始
                     //结束
                     this.$router.push({
@@ -239,10 +195,9 @@
                 }
 
 
-
             },
-            click_tag(id,tname) {
-                this.navtag=tname
+            click_tag(id, tname) {
+                this.navtag = tname
             },
             click_content(tid) {
                 let routeUrl = this.$router.resolve({
@@ -250,12 +205,12 @@
                 });
                 window.open(routeUrl.href, '_blank');
             },
-            handleSizeChange(val){
+            handleSizeChange(val) {
                 alert(val)
                 this.queryInfo.pagenum = val;
                 this.getBlog()
             },
-            handleCurrentChange(val){
+            handleCurrentChange(val) {
                 alert(val)
                 this.queryInfo.pagenum = val;
                 this.getBlog()
@@ -289,15 +244,18 @@
     .bg-purple-dark {
         background: rgb(233, 236, 239)
     }
-    .bbsshowtypeall{
+
+    .bbsshowtypeall {
 
     }
-    .top{
+
+    .top {
 
     }
-    .isFixed{
+
+    .isFixed {
         margin-top: 50px;
-        position:fixed;
+        position: fixed;
         z-index: 999;
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 100vw" ref="navfixedBar" :class="navsearchBarFixed == true ? 'navisFixed':'navtab'" >
+    <div ref="navfixedBar" :class="navsearchBarFixed == true ? 'navisFixed':'navtab'" >
         <el-row :gutter="20" class="nav_backgroup">
             <el-col :span="5"><div class="grid-content bg-purple"></div></el-col>
 
@@ -169,11 +169,9 @@
     .bg-purple {
 
     }
+
     .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-    .grid-content {
+        height: 100%;
         border-radius: 4px;
         min-height: 36px;
     }
@@ -187,12 +185,12 @@
         border-radius: 15px;
     }
     .navtop{
-        width: 100%;
+
     }
     .navisFixed{
         position: fixed;
         z-index: 999;
-        width: 100%;
+        width: 100vw;
     }
 
     body{margin-top: 0px}
