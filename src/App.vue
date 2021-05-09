@@ -3,7 +3,7 @@
         <div >
             <div class="header"> <Nav_Bar></Nav_Bar></div>
             <div class="section"> <router-view/></div>
-            <div class="footer">   <div style="width: 100%;align-content: center;margin:0 auto;width:300px;height:100px;margin-top: 1%;padding-top: 1%">
+            <div class="footer">   <div style="width: 100%; z-index: 1000;align-content: center;margin:0 auto;width:300px;height:100px;margin-top: 1%;padding-top: 1%">
                 <div style="float: left;margin-left: 6%">
                     <a href="#" class="footClick">关于本站</a>
                 </div>

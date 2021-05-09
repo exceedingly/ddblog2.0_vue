@@ -3,7 +3,7 @@
     <div class="bg-purple-dark" style="height: 100%">
         <el-row class="nav_backgroup">
             <!--左边开始-->
-            <el-col :span="5" style="height: 1630px;background-color: #f8f8f8">
+            <el-col :span="5" style="height:1800px;background-color: #f8f8f8">
                 <div></div>
             </el-col>
             <!--左边结束-->
@@ -56,7 +56,7 @@
                     </el-col>
                     <el-col :span="6">
                         <div ref="fixedBar" :class="searchBarFixed == true ? 'isFixed':'tab'"
-                             style="background-color: #f8f8f8;height: 1630px">
+                             >
                             <div style="background-color: #f8f8f8;margin: 10px;">
                                 <el-button type="primary" style="width: 100%" @click="addbbs"> 发布文章</el-button>
                             </div>
@@ -67,15 +67,14 @@
                                     <!--箭头 和 全部标签-->
                                     <el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-arrow-right"></el-button>
                                 </div>
-                                <!--                                标签集合-->
+                                <!--标签集合-->
                                 <div>
                                     <ul>
                                         <div v-for="o in allType"
                                              style="font-size: 15px;"
                                         >
                                             <li class="hover" style=" list-style: none;  width: 200px;margin-left: -50px ;padding: 10px"
-                                                v-on:click="click_tag(o.id,o.name)">{{ o.name }}<span><i style="float: right"
-                                                                                                         class="el-icon-arrow-right"></i></span>
+                                                v-on:click="click_tag(o.id,o.name)">{{ o.name }}<span><i style="float: right"  class="el-icon-arrow-right"></i></span>
                                             </li>
                                         </div>
                                     </ul>
@@ -90,7 +89,7 @@
             </el-col>
             <!--中间结束-->
             <!--右边开始-->
-            <el-col :span="5" style="height: 1630px;background-color: #f8f8f8">
+            <el-col :span="5" style="height: 1800px;background-color: #f8f8f8">
                 <div></div>
             </el-col>
             <!--右边结束-->
@@ -105,12 +104,10 @@
 <script>
     import axios from 'axios'
     import utils from "@/views/nav/temp";
-
     const area_axios = axios.create({
         headers: {'Content-Type': 'application/json;charset=utf-8'},
         headers: {'token': localStorage.getItem('token')},
     })
-
     export default {
         beforeCreate() {
             document.querySelector('body').setAttribute('style', 'background-color:#f8f8f8')
@@ -139,14 +136,12 @@
                     {id: 2, name: "面试"},
                     {id: 3, name: "linux"},
                     {id: 4, name: "算法"},
-
                 ],
                 activeName: 'index',
             };
         },
         components: {
             utils,
-
         },
         mounted() {
             window.addEventListener("scroll", this.handleScroll)
@@ -159,7 +154,6 @@
             handleScroll() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                 scrollTop > this.offsetTop ? this.searchBarFixed = true : this.searchBarFixed = false;
-
             },
             getBlog() {
                 var that = this
@@ -193,8 +187,6 @@
                         path: `/info/add`,
                     })
                 }
-
-
             },
             click_tag(id, tname) {
                 this.navtag = tname
@@ -223,40 +215,29 @@
         background-color: rgb(233, 236, 239);
         cursor: pointer;
     }
-
     .content:hover {
         cursor: pointer;
     }
-
     .bg-purple {
     }
-
     .grid-content {
         border-radius: 4px;
         min-height: 36px;
     }
-
     .grid-content {
         border-radius: 4px;
         min-height: 36px;
     }
-
     .bg-purple-dark {
         background: rgb(233, 236, 239)
     }
-
     .bbsshowtypeall {
-
     }
-
     .top {
-
     }
-
     .isFixed {
-        margin-top: 50px;
-        position: fixed;
-        z-index: 999;
-    }
 
+        position: fixed;
+
+    }
 </style>

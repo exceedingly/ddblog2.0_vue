@@ -1,72 +1,61 @@
-<div class="searchsubbox" id="fixedBar" :class="{ fixedBar: isFixed }">
-    <ul class="searchul">
-        <li @click="getSonAreaListData" :class="{ on: quyudownshow }">
-            <p>
-                <span>区域</span>
-                <i></i>
-            </p>
-        </li>
-        <li @click="getPriceListData" :class="{ on: jiagedownshow }">
-            <p>
-                <span>均价</span>
-                <i></i>
-            </p>
-        </li>
-        <li @click="getapartmentListData" :class="{ on: huxingdownshow }">
-            <p>
-                <span>户型</span>
-                <i></i>
-            </p>
-        </li>
-    </ul>
-</div>
-<div :style="{ marginTop: marginTop }">
-    <!-- 数据列表 -->
-</div>
+<!--<template>-->
+    <!--<div>-->
 
-<style>
-    .fixedBar {
-        position: fixed;
-        top: 0;
-        z-index: 999;
-        width: 100%;
-    }
-</style>
-<script>
+        <!--<el-form ref="form" :model="form" label-width="80px">-->
+            <!--<el-form-item label="用户名">-->
+                <!--<el-input v-model="form.username"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="密码">-->
+                <!--<el-input v-model="form.password"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item>-->
+                <!--<el-button type="primary" @click="onSubmit">立即创建</el-button>-->
+                <!--<el-button>取消</el-button>-->
+            <!--</el-form-item>-->
+        <!--</el-form>-->
+    <!--</div>-->
 
-    export default {
-        data () {
-            return{
-                isFixed: false,
-                offsetTop: 0,
-                marginTop: 0,
-            }
+<!--</template>-->
 
-        },
-        mounted () {
-            // 设置bar浮动阈值为 #fixedBar 至页面顶部的距离
-            this.offsetTop = document.querySelector('#fixedBar').offsetTop;
+<!--<script>-->
 
-            // 开启滚动监听
-            window.addEventListener('scroll', this.handleScroll);
-        },
-        methods:{
-            // 滚动监听 滚动触发的效果写在这里
-            handleScroll () {
-                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    <!--import utils from '../nav/temp.js';-->
+    <!--import axios from 'axios'-->
+    <!--const area_axios = axios.create({-->
+        <!--headers: {'Content-Type': 'application/json;charset=utf-8'},-->
+    <!--})-->
 
-                if (scrollTop >= this.offsetTop) {
-                    this.isFixed = true;
-                    this.marginTop = document.querySelector('#fixedBar').offsetHeight + 'px';
-                } else {
-                    this.isFixed = false;
-                    this.marginTop = 0;
-                }
-            }
-        }
+    <!--export default {-->
+        <!--data() {-->
+            <!--return {-->
+                <!--form: {-->
+                    <!--id:'1'-->
+<!--,                   username: '',-->
+                    <!--password:'',-->
+                <!--}-->
+            <!--}-->
+        <!--},-->
+        <!--created() {-->
+            <!--this.$emit('selectnav','bbs_login');-->
+        <!--},-->
+        <!--methods: {-->
 
-}
+            <!--onSubmit() {-->
+                <!--area_axios({-->
+                    <!--url: 'http://localhost:8080/login',-->
+                    <!--method: 'post',-->
+                    <!--data:{"username":this.form.username,"password":this.form.password},-->
+                <!--}).then((response) => {-->
+                    <!--localStorage.setItem('token', response.data.token);-->
+                    <!--utils.$emit('demo',response.data.name);-->
 
+                <!--})-->
+            <!--},-->
+            <!--aaa(){-->
+                <!--console.log("62")-->
+                <!--utils.$emit('login',"asd");-->
+            <!--}-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
 
-
-</script>
